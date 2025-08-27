@@ -1,31 +1,68 @@
-import React, { createContext, useState, ReactNode } from "react";
-import { User } from "../types/User";
-import { registerUser } from "../services/api";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { User, AuthResponse, LoginData, RegisterData, AuthContextData } from "../types/User";
+import { loginUser, registerUser } from "../services/authService";
 
-interface AuthContextData {
-  user: User | null;
-  register: (name: string, email: string, password: string) => Promise<string | null>;
-}
 
 export const AuthContext = createContext<AuthContextData>({
   user: null,
-  register: async () => null
+  token: null,
+  register: async () => null,
+  login: async () => null,
+  logout: async () => { },
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthResponse  | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  const register = async (name: string, email: string, password: string) => {
+  // Persistência
+  useEffect(() => {
+    const loadUser = async () => {
+      const storedToken = await AsyncStorage.getItem("token");
+      const storedUser = await AsyncStorage.getItem("user");
+      if (storedToken && storedUser) {
+        setToken(storedToken);
+        setUser(JSON.parse(storedUser));
+      }
+    };
+    loadUser();
+  }, []);
+
+   const register = async (data: RegisterData) => {
     try {
-      await registerUser({ name, email, password });
-      return null; // sucesso
+      await registerUser(data);
+      return null;
     } catch (err: any) {
       return err.response?.data?.message || "Erro no registro";
     }
   };
 
-  return (
-    <AuthContext.Provider value={{ user, register }}>
+   const login = async (data: LoginData) => {
+    try {
+      const res: AuthResponse = await loginUser(data);
+
+      setUser(res);  // compatível porque agora user é AuthResponse
+      setToken(res.token);
+
+      await AsyncStorage.setItem("token", res.token);
+      await AsyncStorage.setItem("user", JSON.stringify(res));
+
+      return null;
+    } catch (err: any) {
+      return err.response?.data?.message || "Erro no login";
+    }
+  };
+
+   const logout = async () => {
+    setUser(null);
+    setToken(null);
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("user");
+  };
+
+return (
+    <AuthContext.Provider value={{ user, token, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

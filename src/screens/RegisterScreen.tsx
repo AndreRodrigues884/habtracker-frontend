@@ -1,4 +1,7 @@
 import React, { useState, useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { RootStackParamList } from "../routes/router";
 import { View, Text, Alert, StyleSheet } from "react-native";
 import { InputField } from "../components/InputField";
 import { PrimaryButton } from "../components/PrimaryButton";
@@ -8,13 +11,14 @@ import { theme } from "../styles/theme";
 
 
 export const RegisterScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { register } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
-    const error = await register(name, email, password);
+    const error = await register({name, email, password});
     if (error) {
       return Alert.alert("Erro", error);
     }
@@ -22,6 +26,8 @@ export const RegisterScreen = () => {
     setName("");
     setEmail("");
     setPassword("");
+
+    navigation.replace("Login");
   };
 
   return (
@@ -30,7 +36,7 @@ export const RegisterScreen = () => {
         <View style={[styles.thirdContainer]}>
           <View style={[styles.textsContainer]}>
             <Text style={styles.title}>Create an account!</Text>
-            <Text style={styles.subtitle}>Already have an account?{" "}<Text style={styles.link}>Sign in</Text></Text>
+            <Text style={styles.subtitle}>Already have an account?{" "}<Text style={styles.link} onPress={() => navigation.replace("Login")}>Sign in</Text></Text>
           </View>
 
           <View style={[styles.inputsContainer]}>
