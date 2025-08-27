@@ -4,7 +4,8 @@ import { InputField } from "../components/InputField";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { AuthContext } from "../contexts/AuthContext";
 import { theme } from "../styles/theme";
-import { commonStyles } from "../styles/common";
+
+
 
 export const RegisterScreen = () => {
   const { register } = useContext(AuthContext);
@@ -24,27 +25,97 @@ export const RegisterScreen = () => {
   };
 
   return (
-    <View style={[commonStyles.flexCenter, styles.container]}>
-      <Text style={styles.title}>Habtracker</Text>
+    <View style={[styles.mainContainer]}>
+      <View style={[styles.secondContainer]}>
+        <View style={[styles.thirdContainer]}>
+          <View style={[styles.textsContainer]}>
+            <Text style={styles.title}>Create an account!</Text>
+            <Text style={styles.subtitle}>Already have an account?{" "}<Text style={styles.link}>Sign in</Text></Text>
+          </View>
 
-      <InputField placeholder="Name" value={name} onChangeText={setName} />
-      <InputField placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
-      <InputField placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
-
-      <PrimaryButton title="Register" onPress={handleRegister} />
+          <View style={[styles.inputsContainer]}>
+            <View style={[styles.inputs]}>
+              <InputField placeholder="Name" value={name} onChangeText={setName} />
+              <InputField placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
+              <InputField placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+            </View>
+            <View style={[styles.link_passwordContainer]}>
+              <Text style={styles.link_password}>Forgot your password?</Text>
+            </View>
+          </View>
+          <PrimaryButton title="Sign Up" onPress={handleRegister} />
+        </View>
+        <View style={[styles.logoContainer]}>
+          <Text style={styles.logo}>HabTracker</Text>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: theme.spacing.xl,
-    backgroundColor: theme.colors.white,
+  mainContainer: {
+    ...theme.padding.horizontal.xxl,
+    ...theme.padding.vertical.xxl,
+    ...theme.align["top-left"],
+    ...theme.size.full,
+    ...theme.flex.column,
+    gap: theme.gap.lg,
+    backgroundColor: theme.colors.background,
+  },
+  secondContainer: {
+    ...theme.align["center-left"],
+    ...theme.size.full,
+    ...theme.flex.column,
+  },
+  thirdContainer: {
+    ...theme.align["center-left"],
+    ...theme.size.full,
+    ...theme.flex.column,
+    gap: theme.gap.lg,
+  },
+  textsContainer: {
+    ...theme.size.hug,
+    gap: theme.gap.sm,
+  },
+  inputsContainer: {
+    ...theme.size.full_width,
+    gap: theme.gap.sm,
+  },
+  inputs: {
+    gap: theme.gap.md,
   },
   title: {
-    ...theme.typography.h1,
-    marginBottom: theme.spacing.xl,
-    color: theme.colors.primary,
-    ...commonStyles.textCenter,
+    color: theme.colors.dark_text,
+    fontSize: theme.typography.sizes.lg,
+    fontFamily: theme.typography.fontFamily.semibold,
   },
+  subtitle: {
+    color: theme.colors.dark_text,
+    fontFamily: theme.typography.fontFamily.medium,
+  },
+  link: {
+    color: theme.colors.primary,
+    fontFamily: theme.typography.fontFamily.semibold,
+  },
+  link_password: {
+    color: theme.colors.dark_text,
+    fontSize: theme.typography.sizes.xs,
+    fontFamily: theme.typography.fontFamily.regular,
+  },
+  link_passwordContainer: {
+    ...theme.align["center-right"],
+    ...theme.size.full_width,
+  },
+  logo: {
+    color: theme.colors.primary,
+    fontSize: theme.typography.sizes.lg,
+    fontFamily: theme.typography.fontFamily.bold,
+    ...theme.padding.vertical.sm
+  },
+  logoContainer: {
+     ...theme.size.full_width,
+    ...theme.size.hug_height,
+    ...theme.align["center"],
+  }
 });

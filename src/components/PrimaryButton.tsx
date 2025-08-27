@@ -19,18 +19,17 @@ export const PrimaryButton: React.FC<Props> = ({ title, onPress }) => (
 
 const styles = StyleSheet.create({
   button: {
+    ...theme.padding.horizontal.sm,
+    ...theme.padding.vertical.sm,
+    ...theme.align["center"],
+    ...theme.size.hug_height,
+    ...theme.size.full_width,
     backgroundColor: theme.colors.primary,
-    padding: theme.spacing.lg,
-    borderRadius: theme.borderRadius.md,
-    marginTop: theme.spacing.sm,
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 320,
-    ...theme.shadows.small,
+    borderRadius: theme.borderRadius.sm
   },
   buttonText: {
-    color: theme.colors.white,
-    fontWeight: 'bold',
-    fontSize: theme.typography.body.fontSize,
+    color: theme.colors.background,
+    fontSize: theme.typography.sizes.sm,
+    fontFamily: theme.typography.fontFamily.semibold,
   },
 });

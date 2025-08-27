@@ -1,94 +1,98 @@
+import { ViewStyle, FlexAlignType } from "react-native";
+
+type Justify =
+  | "flex-start"
+  | "flex-end"
+  | "center"
+  | "space-between"
+  | "space-around"
+  | "space-evenly";
+
+type Align = FlexAlignType;
+
 export const theme = {
+  // Flex helpers
+  flex: {
+    row: { flexDirection: 'row' as const } satisfies ViewStyle,
+    column: { flexDirection: 'column' as const } satisfies ViewStyle,
+  },
+
+  // Alignments
+  align: {
+    "top-left": { justifyContent: "flex-start" as Justify, alignItems: "flex-start" as Align } satisfies ViewStyle,
+    "top-center": { justifyContent: "flex-start" as Justify, alignItems: "center" as Align } satisfies ViewStyle,
+    "top-right": { justifyContent: "flex-start" as Justify, alignItems: "flex-end" as Align } satisfies ViewStyle,
+    "center-left": { justifyContent: "center" as Justify, alignItems: "flex-start" as Align } satisfies ViewStyle,
+    "center": { justifyContent: "center" as Justify, alignItems: "center" as Align } satisfies ViewStyle,
+    "center-right": { justifyContent: "center" as Justify, alignItems: "flex-end" as Align } satisfies ViewStyle,
+    "bottom-left": { justifyContent: "flex-end" as Justify, alignItems: "flex-start" as Align } satisfies ViewStyle,
+    "bottom-center": { justifyContent: "flex-end" as Justify, alignItems: "center" as Align } satisfies ViewStyle,
+    "bottom-right": { justifyContent: "flex-end" as Justify, alignItems: "flex-end" as Align } satisfies ViewStyle,
+  },
+
+  // Size helpers
+  size: {
+    hug: { width: 'auto' as const, height: 'auto' as const } satisfies ViewStyle,
+    hug_height: { height: 'auto' as const } satisfies ViewStyle,
+    full: { width: '100%' as const, height: '100%' as const } satisfies ViewStyle,
+    full_width: { width: '100%' as const } satisfies ViewStyle,
+  },
+
+  // Gap
+  gap: {
+    sm: 8,
+    md: 20,
+    lg: 24,
+  },
+
+  // Colors
   colors: {
     primary: '#2D69FF',
-    primaryDark: '#1d4ed8',
-    secondary: '#64748b',
-    success: '#10b981',
-    error: '#ef4444',
-    warning: '#f59e0b',
-    white: '#ffffff',
-    black: '#000000',
-    gray: {
-      50: '#434343',
-      100: '#f3f4f6',
-      200: '#e5e7eb',
-      300: '#d1d5db',
-      400: '#9ca3af',
-      500: '#6b7280',
-      600: '#4b5563',
-      700: '#374151',
-      800: '#1f2937',
-      900: '#111827',
+    dark_text: '#434343',
+    secondary: '#2DBCFF',
+    white: '#FFFFFF',
+    background: '#F8F8F8',
+    gray: '#D9D9D9',
+  },
+
+  // Padding
+  padding: {
+    horizontal: {
+      sm: { paddingHorizontal: 12 } satisfies ViewStyle,
+      md: { paddingHorizontal: 16 } satisfies ViewStyle,
+      xxl: { paddingHorizontal: 32 } satisfies ViewStyle,
+    },
+    vertical: {
+      sm: { paddingVertical: 12 } satisfies ViewStyle,
+      xxl: { paddingVertical: 56 } satisfies ViewStyle,
     },
   },
-  spacing: {
-    xs: 4,
+
+
+  // Border radius
+  borderRadius: {
     sm: 8,
     md: 12,
-    lg: 16,
-    xl: 20,
-    xxl: 24,
-    xxxl: 32,
   },
-  borderRadius: {
-    sm: 4,
-    md: 8,
-    lg: 12,
-    xl: 16,
-    full: 9999,
+
+  borderColor: {
+    borderWidth: 1,
+    borderColor: '#2D69FF', // theme.colors.primary
   },
-  typography: {
-    h1: {
-      fontSize: 32,
-      fontWeight: 'bold' as const,
-      lineHeight: 40,
-    },
-    h2: {
-      fontSize: 24,
-      fontWeight: 'bold' as const,
-      lineHeight: 32,
-    },
-    body: {
-      fontSize: 16,
-      fontWeight: '600' as const,
-      lineHeight: 28,
-    },
-    caption: {
-      fontSize: 14,
-      fontWeight: 'normal' as const,
-      lineHeight: 20,
-    },
+
+  // Typography
+typography: {
+  fontFamily: {
+    regular: 'InstrumentSans-Regular',
+    medium: 'InstrumentSans-Medium',
+    semibold: 'InstrumentSans-Semibold',
+    bold: 'InstrumentSans-Bold',
   },
-  shadows: {
-    small: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.05,
-      shadowRadius: 2,
-      elevation: 1,
-    },
-    medium: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
-    },
-    large: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 4,
-      },
-      shadowOpacity: 0.15,
-      shadowRadius: 8,
-      elevation: 5,
-    },
+  sizes: {
+    xs: 12,
+    sm: 16,
+    md: 20,
+    lg: 24,
   },
+},
 };
