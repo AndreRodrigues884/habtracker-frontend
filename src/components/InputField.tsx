@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, TextInput, TextInputProps, StyleSheet } from "react-native";
-
 import { theme } from "../styles/theme";
 
 interface InputFieldProps extends TextInputProps {

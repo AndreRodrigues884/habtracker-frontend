@@ -10,10 +10,10 @@ export const FontProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'InstrumentSans-Regular': require('../assets/fonts/InstrumentSans-Regular.ttf'),
+         'InstrumentSans-Regular': require('../assets/fonts/InstrumentSans-Regular.ttf'),
         'InstrumentSans-Medium': require('../assets/fonts/InstrumentSans-Medium.ttf'),
         'InstrumentSans-Semibold': require('../assets/fonts/InstrumentSans-SemiBold.ttf'),
-        'InstrumentSans-Bold': require('../assets/fonts/InstrumentSans-Bold.ttf'),
+        'InstrumentSans-Bold': require('../../src/assets/fonts/InstrumentSans-Bold.ttf'), 
       });
       setFontsLoaded(true);
     }

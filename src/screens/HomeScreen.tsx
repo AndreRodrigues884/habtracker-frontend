@@ -12,7 +12,7 @@ export const HomeScreen = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigation.replace("Login"); // Redireciona para Login e remove a Home da stack
+    navigation.replace("Login");
   };
 
   return (

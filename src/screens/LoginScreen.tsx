@@ -25,7 +25,7 @@ export const LoginScreen = () => {
         setIdentifier("");
         setPassword("");
 
-         navigation.replace("Home");
+        navigation.replace("Menu");
     };
 
     return (
