@@ -16,8 +16,8 @@ import ListIcon from "../assets/icons/list.svg";
 import ListIconActive from "../assets/icons/list-active.svg";
 import CreateIcon from "../assets/icons/create.svg";
 import CreateIconActive from "../assets/icons/create-active.svg";
-import CalendarIcon from "../assets/icons/calendar.svg";
-import CalendarIconActive from "../assets/icons/calendar-active.svg";
+import StreakIcon from "../assets/icons/streak.svg";
+import StreakIconActive from "../assets/icons/streak-active.svg";
 import ProfileIcon from "../assets/icons/profile.svg";
 import ProfileIconActive from "../assets/icons/profile-active.svg";
 
@@ -49,7 +49,7 @@ export const Menu = () => {
               iconSize = 40;
               break;
             case "Calendar":
-              IconComponent = focused ? CalendarIconActive : CalendarIcon;
+              IconComponent = focused ? StreakIconActive : StreakIcon;
               iconSize = 28;
               break;
             case "Profile":

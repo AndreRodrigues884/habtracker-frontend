@@ -7,6 +7,7 @@ import { InputField } from "../components/InputField";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { AuthContext } from "../contexts/AuthContext";
 import { theme } from "../styles/theme";
+import { PasswordInput } from "../components/PasswordInput";
 
 
 
@@ -43,7 +44,7 @@ export const RegisterScreen = () => {
             <View style={[styles.inputs]}>
               <InputField placeholder="Name" value={name} onChangeText={setName} />
               <InputField placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
-              <InputField placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+              <PasswordInput placeholder="Password" value={password} onChangeText={setPassword} />
             </View>
             <View style={[styles.link_passwordContainer]}>
               <Text style={styles.link_password}>Forgot your password?</Text>
