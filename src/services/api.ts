@@ -12,7 +12,7 @@ function getBaseURL() {
   }
 
   // 👉 fallback: em produção usa sempre URL do backend real (se tiveres deploy)
-  return "http://192.168.1.4:3000"; // IP fixo da tua máquina (caso falhe a deteção)
+  return "http://192.168.1.5:3000";// IP fixo da tua máquina (caso falhe a deteção)
 }
 
 const api = axios.create({

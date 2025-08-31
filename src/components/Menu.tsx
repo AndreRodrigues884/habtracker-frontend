@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ImageProps } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { theme } from "../styles/theme";
 
@@ -32,7 +32,7 @@ export const Menu = () => {
         tabBarStyle: styles.tabBar,
         tabBarItemStyle: styles.tabBarItem,
         tabBarIcon: ({ focused }) => {
-          let IconComponent;
+          let IconComponent: React.FC<ImageProps> = HomeIcon;
           let iconSize = 28;
 
           switch (route.name) {
@@ -80,15 +80,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: -4 },
     shadowRadius: 4,
-    elevation: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    elevation: 0,
+    ...theme.flex.row,
+    ...theme.align["space-between"],
+    ...theme.align["center"],
+    ...theme.padding.horizontal.md,
   },
   tabBarItem: {
-    alignItems: "center",
-    justifyContent: "center",
+    ...theme.align["center"],
   },
 });

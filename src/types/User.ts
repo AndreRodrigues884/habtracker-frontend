@@ -36,10 +36,11 @@ export interface AuthResponse {
 }
 
 export interface AuthContextData {
-  user: AuthResponse  | null;
+  user: AuthResponse | null;
   token: string | null;
   register: (data: RegisterData) => Promise<string | null>;
   login: (data: LoginData) => Promise<string | null>;
   logout: () => Promise<void>;
+  setUser?: React.Dispatch<React.SetStateAction<AuthResponse | null>>;
 }
 

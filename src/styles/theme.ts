@@ -68,6 +68,7 @@ export const theme = {
     },
     vertical: {
       sm: { paddingVertical: 12 } satisfies ViewStyle,
+      md: { paddingVertical: 24 } satisfies ViewStyle,
       xxl: { paddingVertical: 56 } satisfies ViewStyle,
     },
   },
