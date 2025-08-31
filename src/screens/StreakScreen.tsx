@@ -6,10 +6,10 @@ import { AuthContext } from "../contexts/AuthContext";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../routes/router";
 
-export const CalendarScreen = () => {
+export const StreakScreen = () => {
   return (
    
-      <Text>Calendar</Text>
+      <Text>StreakScreen</Text>
       
    
   );

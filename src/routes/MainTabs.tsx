@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeScreen } from "../screens/HomeScreen";
 import { ListScreen } from "../screens/ListScreen";
 import { CreateScreen } from "../screens/CreateScreen";
-import { CalendarScreen } from "../screens/CalendarScreen";
+import { StreakScreen } from "../screens/StreakScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
@@ -17,7 +17,7 @@ export const Menu = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="List" component={ListScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Calendar" component={CalendarScreen} />
+      <Tab.Screen name="Streak" component={StreakScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

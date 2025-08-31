@@ -5,7 +5,7 @@ import { theme } from "../styles/theme";
 
 import { HomeScreen } from "../screens/HomeScreen";
 import { CreateScreen } from "../screens/CreateScreen";
-import { CalendarScreen } from "../screens/CalendarScreen";
+import { StreakScreen } from "../screens/StreakScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { ListScreen } from "../screens/ListScreen";
 
@@ -48,7 +48,7 @@ export const Menu = () => {
               IconComponent = focused ? CreateIconActive : CreateIcon;
               iconSize = 40;
               break;
-            case "Calendar":
+            case "Streak":
               IconComponent = focused ? StreakIconActive : StreakIcon;
               iconSize = 28;
               break;
@@ -65,7 +65,7 @@ export const Menu = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="List" component={ListScreen} />
       <Tab.Screen name="Create" component={CreateScreen} />
-      <Tab.Screen name="Calendar" component={CalendarScreen} />
+      <Tab.Screen name="Streak" component={StreakScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

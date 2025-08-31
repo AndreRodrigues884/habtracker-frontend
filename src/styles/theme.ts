@@ -36,6 +36,7 @@ export const theme = {
     hug_height: { height: 'auto' as const } satisfies ViewStyle,
     full: { width: '100%' as const, height: '100%' as const } satisfies ViewStyle,
     full_width: { width: '100%' as const } satisfies ViewStyle,
+    full_height_flex: { flex: 1 } satisfies ViewStyle, // 👈 O componente cresce apenas até ocupar o espaço que sobra.
   },
 
   // Gap
@@ -43,6 +44,7 @@ export const theme = {
     sm: 8,
     md: 20,
     lg: 24,
+    xl: 48,
   },
 
   // Colors
@@ -93,6 +95,12 @@ typography: {
     sm: 16,
     md: 20,
     lg: 24,
+    xl: 40,
+  },
+  align: {
+    center: { textAlign: "center" as const },
+    left: { textAlign: "left" as const },
+    right: { textAlign: "right" as const },
   },
 },
 };
