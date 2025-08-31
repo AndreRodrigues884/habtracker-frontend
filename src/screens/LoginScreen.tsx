@@ -22,7 +22,6 @@ export const LoginScreen = () => {
         if (error) {
             return Alert.alert("Erro", error);
         }
-        Alert.alert("Sucesso", "Login realizado!");
         setIdentifier("");
         setPassword("");
 

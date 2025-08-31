@@ -5,6 +5,7 @@ import { theme } from "../styles/theme";
 import { AuthContext } from "../contexts/AuthContext";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../routes/router";
+import { Header } from "../components/Header";
 
 export const HomeScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -17,7 +18,8 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to HabTracker!</Text>
+      <Header></Header>
+     
       <Button title="Logout" onPress={handleLogout} color={theme.colors.primary} />
     </View>
   );
@@ -25,15 +27,12 @@ export const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    ...theme.padding.horizontal.xxl,
+    paddingTop: theme.padding.vertical.xxl.paddingVertical,
+    ...theme.align["top-left"],
+    ...theme.size.full,
+    ...theme.flex.column,
+    gap: theme.gap.lg,
     backgroundColor: theme.colors.background,
-    gap: 20,
-  },
-  welcome: {
-    fontSize: theme.typography.sizes.lg,
-    fontFamily: theme.typography.fontFamily.semibold,
-    color: theme.colors.primary,
   },
 });

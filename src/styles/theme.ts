@@ -28,6 +28,7 @@ export const theme = {
     "bottom-left": { justifyContent: "flex-end" as Justify, alignItems: "flex-start" as Align } satisfies ViewStyle,
     "bottom-center": { justifyContent: "flex-end" as Justify, alignItems: "center" as Align } satisfies ViewStyle,
     "bottom-right": { justifyContent: "flex-end" as Justify, alignItems: "flex-end" as Align } satisfies ViewStyle,
+    "space-between": { justifyContent: "space-between" as Justify, alignItems: "center" as Align } satisfies ViewStyle,
   },
 
   // Size helpers
@@ -37,6 +38,7 @@ export const theme = {
     full: { width: '100%' as const, height: '100%' as const } satisfies ViewStyle,
     full_width: { width: '100%' as const } satisfies ViewStyle,
     full_height_flex: { flex: 1 } satisfies ViewStyle, // 👈 O componente cresce apenas até ocupar o espaço que sobra.
+    full_width_flex: { flex: 1 } satisfies ViewStyle,
   },
 
   // Gap
@@ -75,11 +77,14 @@ export const theme = {
   borderRadius: {
     sm: 8,
     md: 12,
+    full: 1000,
   },
 
   borderColor: {
     borderWidth: 1,
-    borderColor: '#2D69FF', // theme.colors.primary
+    borderSecondWidth: 1.5,
+    borderColor: '#2D69FF',
+    borderSecondColor: 'rgba(45,105,255,0.4)', 
   },
 
   // Typography
