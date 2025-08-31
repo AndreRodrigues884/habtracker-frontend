@@ -1,28 +1,12 @@
-import React, { useEffect, useState, useContext   } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { theme } from "../styles/theme";
 import { AuthContext } from "../contexts/AuthContext";
 import MenuIcon from "../assets/icons/menu.svg";
-import { getUserLevel } from "../services/userService";
+import { useUserLevel } from "../hooks/useUserLevel";
 
 export const Header: React.FC = () => {
-    const { token } = useContext(AuthContext);
-    const [level, setLevel] = useState<number>(0);
-
-  useEffect(() => {
-    const fetchLevel = async () => {
-      if (!token) return; // se não tiver token, não faz nada
-
-      try {
-        const res = await getUserLevel(token);
-        setLevel(res.level);
-      } catch (err: any) {
-        console.log("Erro ao buscar level:", err.response?.data || err.message);
-      }
-    };
-
-    fetchLevel();
-  }, [token]);
+    const { level, loading } = useUserLevel();
     const handleMenuPress = () => {
         console.log("Menu clicked");
     };
@@ -40,7 +24,7 @@ export const Header: React.FC = () => {
 
             {/* Level */}
             <View style={styles.levelContainer}>
-                <Text style={styles.levelText}>{level}</Text>
+                 <Text style={styles.levelText}>{loading ? "" : level}</Text>
             </View>
 
         </View>

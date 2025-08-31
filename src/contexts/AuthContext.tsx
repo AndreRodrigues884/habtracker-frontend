@@ -1,3 +1,9 @@
+/* O que são: mecanismo do React para compartilhar dados entre componentes sem precisar passar props manualmente em cada nível da árvore.
+
+Exemplos comuns:
+AuthContext → guarda token e info do usuário logado.
+*/
+
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User, AuthResponse, LoginData, RegisterData, AuthContextData } from "../types/User";
