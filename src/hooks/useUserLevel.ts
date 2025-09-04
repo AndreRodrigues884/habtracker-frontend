@@ -13,6 +13,7 @@ import { getUserLevel } from "../services/userService";
 export const useUserLevel = () => {
   const { token } = useContext(AuthContext);
   const [level, setLevel] = useState<number>(0);
+  const [xp, setXp] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export const useUserLevel = () => {
       try {
         const res = await getUserLevel(token);
         setLevel(res.level);
+        setXp(res.xp);
       } catch (err: any) {
         console.log("Erro ao buscar level:", err.response?.data || err.message);
       } finally {
@@ -32,5 +34,5 @@ export const useUserLevel = () => {
     fetchLevel();
   }, [token]);
 
-  return { level, loading };
+  return { level, xp, loading };
 };

@@ -24,9 +24,8 @@ export const Header: React.FC = () => {
 
             {/* Level */}
             <View style={styles.levelContainer}>
-                 <Text style={styles.levelText}>{loading ? "" : level}</Text>
+                <Text style={styles.levelText}>{loading ? "" : level}</Text>
             </View>
-
         </View>
     );
 };
@@ -60,5 +59,4 @@ const styles = StyleSheet.create({
         fontFamily: theme.typography.fontFamily.semibold,
         color: theme.colors.primary,
     },
-
 });

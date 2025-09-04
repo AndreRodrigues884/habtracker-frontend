@@ -1,18 +1,25 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { Header } from "../components/Header";
-import { useNavigation } from "@react-navigation/native";
+import {InputField} from "../components/InputField";
+import { PrimaryButton } from "../components/PrimaryButton";
+
 import { theme } from "../styles/theme";
-import { AuthContext } from "../contexts/AuthContext";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "../routes/router";
 
 export const CreateScreen = () => {
+   const createHabit = async () => {
+          console.log('Create Habit');
+          
+      };
   return (
 
     <View style={styles.container}>
       <Header></Header>
-      <Text>Create Habit</Text>
+      <PrimaryButton title="Create Habit" onPress={createHabit}></PrimaryButton>
+      <View>
+        <Text>Title</Text>
+        <InputField placeholder="Title" />
+      </View>
     </View>
 
 

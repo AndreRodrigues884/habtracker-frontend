@@ -1,5 +1,6 @@
 export interface UserLevelResponse {
   level: number;
+  xp: number;
 }
 
 export interface UserXpAchievementsResponse {
