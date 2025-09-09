@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { theme } from "../styles/theme";
@@ -7,15 +7,18 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../routes/router";
 import { Header } from "../components/Header";
 import { useXpAchievements } from "../hooks/useXpAchievements";
-import { AchievementModal } from "../components/AchievementModal";
-import { useUserLevel } from "../hooks/useUserLevel";
 
 export const HomeScreen = () => {
-  const { modalVisible, currentAchievement, handleClaim } = useXpAchievements();
+  const { handleClaim, fetchXpAchievements } = useXpAchievements();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
 
-   const { xp, loading } = useUserLevel();
+  useEffect(() => {
+    if (user) {
+      fetchXpAchievements();
+    }
+  }, [user, fetchXpAchievements]);
+
 
   const handleLogout = async () => {
     await logout();
@@ -23,19 +26,16 @@ export const HomeScreen = () => {
   };
 
 
+
   return (
     <View style={styles.container}>
       <Header></Header>
-      {!loading && <Text style={styles.xpText}>{xp} XP</Text>}
-      <Button title="Logout" onPress={handleLogout} color={theme.colors.primary} />
-
-      {currentAchievement && (
-        <AchievementModal
-          achievement={currentAchievement}
-          isVisible={modalVisible}   // aqui passa a prop
-          onClaim={handleClaim}
-        />
+      {user && (
+        <Text style={styles.xpText}>
+          {user.currentXp ?? 0} XP
+        </Text>
       )}
+      <Button title="Logout" onPress={handleLogout} color={theme.colors.primary} />
 
     </View>
   );
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     gap: theme.gap.lg,
     backgroundColor: theme.colors.background,
   },
-   xpText: {
+  xpText: {
     fontSize: theme.typography.sizes.sm,
     color: theme.colors.dark_text,
   },

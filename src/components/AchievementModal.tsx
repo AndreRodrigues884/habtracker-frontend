@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import Modal from "react-native-modal";
+import { View, Text, Pressable, StyleSheet, Modal, Dimensions } from "react-native";
 import { Achievement } from "../types/Achievements";
 import { theme } from "../styles/theme";
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface AchievementModalProps {
     achievement: Achievement;
@@ -10,39 +11,47 @@ interface AchievementModalProps {
     isVisible: boolean;
 }
 
-export const AchievementModal: React.FC<AchievementModalProps> = ({ achievement, onClaim, isVisible }) => {
+export const AchievementModal: React.FC<AchievementModalProps> = ({ achievement, onClaim, isVisible }) => { 
     return (
         <Modal
-            isVisible={isVisible}
-            onBackdropPress={onClaim}
-            style={styles.modalWrapper}
+            visible={isVisible}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={onClaim}
         >
-            <View style={styles.modal}>
-                <Text style={styles.type}>{achievement.type}</Text>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Achievement Unlocked! 🎉</Text>
-                    <Text style={styles.name}>{achievement.name}</Text>
+            <View style={styles.overlay}>
+                <Pressable style={styles.backdrop} onPress={onClaim} />
+                <View style={styles.modal}>
+                    <View style={styles.handle} />
+                    <Text style={styles.type}>{achievement.type}</Text>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>Achievement Unlocked! 🎉</Text>
+                        <Text style={styles.name}>{achievement.name}</Text>
+                        <Text style={styles.xpReward}>+{achievement.rewardXp} XP</Text>
+                    </View>
+                    <Pressable style={styles.button} onPress={onClaim}>
+                        <Text style={styles.buttonText}>Claim</Text>
+                    </Pressable>
                 </View>
-                <Pressable style={styles.button} onPress={onClaim}>
-                    <Text style={styles.buttonText}>Claim</Text>
-                </Pressable>
             </View>
         </Modal>
     );
 };
 
 const styles = StyleSheet.create({
-     modalWrapper: {
-        ...theme.align["bottom-center"],
-    },
     overlay: {
-        ...theme.size.full_width_flex,
-        ...theme.size.full_height_flex,
-        ...theme.align["bottom-center"],
-        backgroundColor: "rgba(0,0,0,0.05)", // leve transparência
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'flex-end',
+    },
+    backdrop: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
     modal: {
-        ...theme.size.full_width,
         backgroundColor: theme.colors.white,
         ...theme.padding.horizontal.xxl,
         ...theme.padding.vertical.md,
@@ -50,7 +59,18 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 32,
         ...theme.flex.column,
         ...theme.align["space-between"],
-        gap: theme.gap.lg
+        gap: theme.gap.lg,
+        paddingBottom: 50, // Espaço extra para o safe area e cobrir o menu
+        minHeight: 200, // Altura mínima para garantir que cubra o menu
+        maxHeight: screenHeight * 0.6, // Máximo 60% da tela
+    },
+    handle: {
+        width: 40,
+        height: 4,
+        backgroundColor: theme.colors.dark_text,
+        borderRadius: 2,
+        alignSelf: 'center',
+        marginBottom: theme.gap.md,
     },
     titleContainer: {
         gap: theme.gap.sm,
@@ -66,6 +86,16 @@ const styles = StyleSheet.create({
         fontSize: theme.typography.sizes.sm,
         color: theme.colors.dark_text,
         fontFamily: theme.typography.fontFamily.medium,
+    },
+    xpReward: {
+        fontSize: theme.typography.sizes.sm,
+        color: theme.colors.primary,
+        fontFamily: theme.typography.fontFamily.semibold,
+        backgroundColor: theme.colors.primary + '20', // 20% opacity
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 12,
+        overflow: 'hidden',
     },
     type: {
         fontSize: theme.typography.sizes.sm,

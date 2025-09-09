@@ -1,3 +1,5 @@
+import { Achievement } from "./Achievements";
+
 export interface User {
   _id: string;  // id do MongoDB
   name: string;
@@ -33,6 +35,8 @@ export interface AuthResponse {
   xpGrantedToday?: boolean;
   currentXp?: number;
   level?: number;
+  unlockedAchievements?: Achievement[];
+  pendingAchievements?: Achievement[];
 }
 
 export interface AuthContextData {
@@ -41,6 +45,6 @@ export interface AuthContextData {
   register: (data: RegisterData) => Promise<string | null>;
   login: (data: LoginData) => Promise<string | null>;
   logout: () => Promise<void>;
-  setUser?: React.Dispatch<React.SetStateAction<AuthResponse | null>>;
+  setUser: React.Dispatch<React.SetStateAction<AuthResponse | null>>;
 }
 

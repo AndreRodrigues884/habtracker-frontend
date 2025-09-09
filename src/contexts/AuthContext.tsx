@@ -16,6 +16,7 @@ export const AuthContext = createContext<AuthContextData>({
   register: async () => null,
   login: async () => null,
   logout: async () => { },
+  setUser: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -48,12 +49,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const res: AuthResponse = await loginUser(data);
 
-      setUser(res);  // compatível porque agora user é AuthResponse
+      setUser({
+        ...res,
+        currentXp: res.currentXp ?? 0, // garante XP inicial
+        level: res.level ?? 1,          // garante level inicial
+        pendingAchievements: res.unlockedAchievements ?? [],
+      });
       setToken(res.token);
 
       await AsyncStorage.setItem("token", res.token);
       await AsyncStorage.setItem("user", JSON.stringify(res));
-
+    
       return null;
     } catch (err: any) {
       return err.response?.data?.message || "Erro no login";

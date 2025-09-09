@@ -5,6 +5,8 @@ import { Menu } from "../components/Menu";
 import { RegisterScreen } from "../screens/RegisterScreen";
 import { LoginScreen } from "../screens/LoginScreen";
 import { WelcomeScreen } from "../screens/WelcomeSreen";
+import { AchievementModal } from "../components/AchievementModal";
+import { useAchievementModal } from "../contexts/AchievementModalContext";
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -15,17 +17,33 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export const Router = () => {
+const RouterContent = () => {
+  const { modalVisible, currentAchievement, hideModal } = useAchievementModal();
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome" /* Menu */ screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Menu" component={Menu} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome" /* Menu */ screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Menu" component={Menu} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      
+      {currentAchievement && (
+        <AchievementModal
+          achievement={currentAchievement}
+          isVisible={modalVisible}
+          onClaim={hideModal}
+        />
+      )}
+    </>
   );
+};
+
+export const Router = () => {
+  return <RouterContent />;
 };
 
 /* Para telas que alternam entre si, como Login ↔ Register, sempre use replace.
