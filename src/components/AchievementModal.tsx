@@ -12,6 +12,7 @@ interface AchievementModalProps {
 }
 
 export const AchievementModal: React.FC<AchievementModalProps> = ({ achievement, onClaim, isVisible }) => { 
+    
     return (
         <Modal
             visible={isVisible}
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
         ...theme.flex.column,
         ...theme.align["space-between"],
         gap: theme.gap.lg,
-        paddingBottom: 50, // Espaço extra para o safe area e cobrir o menu
+        paddingBottom: 50, // Espaço extra para o safe area
         minHeight: 200, // Altura mínima para garantir que cubra o menu
         maxHeight: screenHeight * 0.6, // Máximo 60% da tela
     },
@@ -117,6 +118,5 @@ const styles = StyleSheet.create({
         fontFamily: theme.typography.fontFamily.semibold,
         ...theme.typography.align.center,
     },
-
 });
 

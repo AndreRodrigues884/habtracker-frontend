@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       setUser({
         ...res,
+        name: res.name,
         currentXp: res.currentXp ?? 0, // garante XP inicial
         level: res.level ?? 1,          // garante level inicial
         pendingAchievements: res.unlockedAchievements ?? [],

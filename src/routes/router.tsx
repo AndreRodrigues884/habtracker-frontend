@@ -31,13 +31,17 @@ const RouterContent = () => {
         </Stack.Navigator>
       </NavigationContainer>
       
-      {currentAchievement && (
-        <AchievementModal
-          achievement={currentAchievement}
-          isVisible={modalVisible}
-          onClaim={hideModal}
-        />
-      )}
+      <AchievementModal
+        achievement={currentAchievement || {
+          _id: 'default',
+          name: 'Default Achievement',
+          type: 'xp',
+          threshold: 0,
+          rewardXp: 0,
+        }}
+        isVisible={modalVisible && !!currentAchievement}
+        onClaim={hideModal}
+      />
     </>
   );
 };

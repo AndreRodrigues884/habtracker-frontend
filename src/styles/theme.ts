@@ -43,7 +43,9 @@ export const theme = {
 
   // Gap
   gap: {
+    xs: 4,
     sm: 8,
+    s: 12,
     md: 20,
     lg: 24,
     xl: 48,
@@ -53,7 +55,7 @@ export const theme = {
   colors: {
     primary: '#2D69FF',
     dark_text: '#434343',
-    secondary: '#2DBCFF',
+    secondary: '#2d68ff4d',
     white: '#FFFFFF',
     background: '#F8F8F8',
     gray: '#D9D9D9',
@@ -62,11 +64,13 @@ export const theme = {
   // Padding
   padding: {
     horizontal: {
+      xs: { paddingHorizontal: 8 } satisfies ViewStyle,
       sm: { paddingHorizontal: 12 } satisfies ViewStyle,
       md: { paddingHorizontal: 16 } satisfies ViewStyle,
       xxl: { paddingHorizontal: 32 } satisfies ViewStyle,
     },
     vertical: {
+      xs: { paddingVertical: 8 } satisfies ViewStyle,
       sm: { paddingVertical: 12 } satisfies ViewStyle,
       md: { paddingVertical: 24 } satisfies ViewStyle,
       xxl: { paddingVertical: 56 } satisfies ViewStyle,

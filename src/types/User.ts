@@ -31,7 +31,8 @@ export interface LoginData {
 
 export interface AuthResponse {
   id: string;            
-  token: string;         
+  token: string;  
+  name: string;       
   xpGrantedToday?: boolean;
   currentXp?: number;
   level?: number;

@@ -7,9 +7,11 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../routes/router";
 import { Header } from "../components/Header";
 import { useXpAchievements } from "../hooks/useXpAchievements";
+import WeekCalendar from "../components/Weekday";
+import { UserXPHeader } from "../components/UserXPHeader";
 
 export const HomeScreen = () => {
-  const { handleClaim, fetchXpAchievements } = useXpAchievements();
+  const { fetchXpAchievements } = useXpAchievements();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { logout, user } = useContext(AuthContext);
 
@@ -20,23 +22,25 @@ export const HomeScreen = () => {
   }, [user, fetchXpAchievements]);
 
 
-  const handleLogout = async () => {
-    await logout();
-    navigation.replace("Login");
+  const handleDaySelect = (date: Date) => {
+    console.log("Dia selecionado:", date);
+    // aqui você filtra hábitos desse dia
   };
-
-
 
   return (
     <View style={styles.container}>
       <Header></Header>
-      {user && (
-        <Text style={styles.xpText}>
-          {user.currentXp ?? 0} XP
-        </Text>
-      )}
-      <Button title="Logout" onPress={handleLogout} color={theme.colors.primary} />
-
+      <View style={styles.progressBar}>
+        {user && (
+          <UserXPHeader
+            name={user.name}
+            currentXp={user.currentXp ?? 0}
+            level={user.level ?? 1}
+          />
+        )}
+      </View>
+      <WeekCalendar onDaySelect={handleDaySelect} />
+      <Text style={styles.title}>Daily Habits</Text>
     </View>
   );
 };
@@ -50,9 +54,19 @@ const styles = StyleSheet.create({
     ...theme.flex.column,
     gap: theme.gap.lg,
     backgroundColor: theme.colors.background,
+    ...theme.size.full_width,
   },
   xpText: {
     fontSize: theme.typography.sizes.sm,
     color: theme.colors.dark_text,
   },
+  progressBar: {
+    ...theme.align["center"],
+    ...theme.size.full_width,
+  },
+  title: {
+    color: theme.colors.dark_text,
+    fontSize: theme.typography.sizes.md,
+    fontFamily: theme.typography.fontFamily.semibold,
+  }
 });
