@@ -26,6 +26,7 @@ export const useAchievementModal = (): AchievementModalContextType => {
   return context;
 };
 
+
 export const AchievementModalProvider: React.FC<AchievementModalProviderProps> = ({ children }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);

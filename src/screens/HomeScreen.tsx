@@ -13,7 +13,7 @@ import { UserXPHeader } from "../components/UserXPHeader";
 export const HomeScreen = () => {
   const { fetchXpAchievements } = useXpAchievements();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { logout, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {

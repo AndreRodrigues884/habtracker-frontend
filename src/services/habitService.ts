@@ -1,0 +1,22 @@
+import { CreateHabitPayload } from "../types/Habit";
+import api from "./api";
+
+// Criar hábito
+export const createHabit = async (payload: CreateHabitPayload, token: string) => {
+  const { data } = await api.post("/habtracker/habits", payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+
+// Buscar enums (categorias e frequências)
+export const getHabitEnums = async (token: string) => {
+  const { data } = await api.get("/habtracker/habits/enums", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
