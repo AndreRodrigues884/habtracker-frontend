@@ -8,3 +8,10 @@ export interface CreateHabitPayload {
   intention?: string;
   trigger?: string;
 }
+
+export interface HabitCardProps {
+  category: string; // pode ser URL ou require()
+  title: string;
+  currentStreak: number;
+  onComplete?: () => void;
+}

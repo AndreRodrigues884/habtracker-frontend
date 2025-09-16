@@ -33,7 +33,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
   };
 
   return (
-    <View style={{ marginTop: 12 }}>
+    <View style={{ marginTop: 12, width: '100%' }}>
       <Text style={styles.label}>
         {label} {optional ? "" : "*"}
       </Text>
@@ -77,12 +77,12 @@ const styles = StyleSheet.create({
     color: theme.colors.dark_text,
   },
   button: {
+    ...theme.size.full_width, 
     borderWidth: 1,
     borderColor: theme.colors.primary,
     borderRadius: theme.borderRadius.md,
     padding: 10,
     marginTop: 4,
-    ...theme.size.full_width,
   },
   modalOverlay: {
     flex: 1,
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
   },
   option: {
     padding: 16,
-    borderBottomWidth: 1,
     borderBottomColor: theme.colors.secondary,
   },
   optionText: {

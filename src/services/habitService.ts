@@ -20,3 +20,10 @@ export const getHabitEnums = async (token: string) => {
   });
   return data;
 };
+
+export const getUserHabits = async (token: string) => {
+  const response = await api.get("/habtracker/users/habits", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data.habits; 
+};

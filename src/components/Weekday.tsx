@@ -12,6 +12,9 @@ const WeekCalendar: React.FC<WeekCalendarProps> = ({ onDaySelect }) => {
 
     useEffect(() => {
     generateWeekAroundToday();
+    const today = new Date();
+    setSelectedDate(today);
+    if (onDaySelect) onDaySelect(today);
   }, []);
 
     const generateWeekAroundToday = () => {

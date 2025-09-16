@@ -28,7 +28,7 @@ export const DatePickerInput: React.FC<DatePickerInputProps> = ({
   };
 
   return (
-    <View style={{ marginTop: 12 }}>
+    <View style={{ marginTop: 12, width: '100%'}}>
       <Text style={styles.label}>{label} {optional ? "" : "*"}</Text>
 
       <Pressable style={styles.button} onPress={() => setVisible(true)}>
@@ -54,9 +54,10 @@ const styles = StyleSheet.create({
   },
   button: {
     borderWidth: 1,
-    borderColor: theme.colors.secondary,
+    borderColor: theme.colors.primary,
     borderRadius: theme.borderRadius.md,
     padding: 10,
     marginTop: 4,
+    ...theme.size.full_width, 
   },
 });

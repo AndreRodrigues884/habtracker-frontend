@@ -79,7 +79,7 @@ export const CreateScreen = () => {
         <Text style={styles.buttonText}>Create Habit</Text>
       </Pressable>
       <ScrollView
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{  }}
         showsVerticalScrollIndicator={false}
       >
         <Text style={styles.label}>Title *</Text>
@@ -129,10 +129,10 @@ const styles = StyleSheet.create({
     ...theme.padding.horizontal.xxl,
     paddingTop: theme.padding.vertical.xxl.paddingVertical,
     ...theme.align["top-left"],
-    ...theme.size.full,
     ...theme.flex.column,
     gap: theme.gap.lg,
     backgroundColor: theme.colors.background,
+    ...theme.size.full,
   },
   label: {
     fontSize: theme.typography.sizes.sm,
@@ -146,9 +146,10 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
     borderRadius: theme.borderRadius.md,
     ...theme.padding.vertical.sm,
-    ...theme.padding.horizontal.md,
+    ...theme.padding.horizontal.sm,
     fontSize: theme.typography.sizes.sm,
     marginTop: 12,
+    ...theme.size.full_width,
   },
   textArea: { minHeight: 80, textAlignVertical: "top" },
   button: {
