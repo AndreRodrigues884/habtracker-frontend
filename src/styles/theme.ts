@@ -59,6 +59,7 @@ export const theme = {
     white: '#FFFFFF',
     background: '#F8F8F8',
     gray: '#D9D9D9',
+    red: '#FF5555',
   },
 
   // Padding

@@ -8,7 +8,7 @@ const daysOfWeek = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
 const WeekCalendar: React.FC<WeekCalendarProps> = ({ onDaySelect }) => {
     const [weekDays, setWeekDays] = useState<WeekDay[]>([]);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
     useEffect(() => {
     generateWeekAroundToday();

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState  } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { theme } from "../styles/theme";
 import { AuthContext } from "../contexts/AuthContext";
@@ -8,13 +8,16 @@ import WeekCalendar from "../components/Weekday";
 import { UserXPHeader } from "../components/UserXPHeader";
 import { HabitCard } from "../components/HabitCard";
 import { getUserHabits } from "../services/habitService";
+import { completeHabit } from "../services/userService";
+import { isHabitCompletedForPeriod } from "../utils/habitUtils";
 
 export const HomeScreen = () => {
   const { fetchXpAchievements } = useXpAchievements();
-   const [habits, setHabits] = useState<any[]>([]);
+  const [habits, setHabits] = useState<any[]>([]);
   const { user } = useContext(AuthContext);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-   useEffect(() => {
+  useEffect(() => {
     const initData = async () => {
       if (!user) return;
 
@@ -35,13 +38,24 @@ export const HomeScreen = () => {
 
 
   const handleDaySelect = (date: Date) => {
-    console.log("Dia selecionado:", date);
-    // aqui você filtra hábitos desse dia
+    setSelectedDate(date);
   };
 
-  const handleComplete = (habitId: string) => {
-    console.log("Complete habit:", habitId);
+  const handleComplete = async (habitId: string) => {
+    if (!user) return;
+
+    try {
+      const response = await completeHabit(user.token, habitId);
+      const updatedHabit = response.habit;
+
+      setHabits(prev =>
+        prev.map(h => (h._id === habitId ? updatedHabit : h))
+      );
+    } catch (error: any) {
+      console.error("Erro ao completar hábito:", error.response?.data || error.message);
+    }
   };
+
 
   return (
     <View style={styles.container}>
@@ -57,16 +71,23 @@ export const HomeScreen = () => {
       </View>
       <WeekCalendar onDaySelect={handleDaySelect} />
       <Text style={styles.title}>Daily Habits</Text>
-        <View style={styles.habitContainer}>
-        {habits.map((habit) => (
-          <HabitCard
-            key={habit._id}
-            category={habit.category || "no image"}
-            title={habit.title}
-            currentStreak={habit.currentStreak || 0}
-            onComplete={() => handleComplete(habit._id)}
-          />
-        ))}
+      <View style={styles.habitContainer}>
+        {habits.map((habit) => {
+          const isCompleted = isHabitCompletedForPeriod(habit, selectedDate);
+          const isToday = selectedDate.toDateString() === new Date().toDateString();
+          return (
+            <HabitCard
+              key={habit._id}
+              category={habit.category || "no image"}
+              title={habit.title}
+              currentStreak={habit.currentStreak || 0}
+              isCompleted={isCompleted || !isToday}
+              onComplete={isCompleted || !isToday ? undefined : () => handleComplete(habit._id)}
+              style={{ opacity: isCompleted ? 0.4 : 1 }}
+            />
+
+          );
+        })}
       </View>
     </View>
   );
@@ -98,6 +119,6 @@ const styles = StyleSheet.create({
   },
   habitContainer: {
     ...theme.size.full_width,
-     gap: theme.gap.md,
+    gap: theme.gap.md,
   },
 });

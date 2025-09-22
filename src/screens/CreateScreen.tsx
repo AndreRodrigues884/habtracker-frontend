@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, TextInput, Pressable, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { theme } from "../styles/theme";
 import { AuthContext } from "../contexts/AuthContext";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { Header } from "../components/Header";
 import { createHabit, getHabitEnums } from "../services/habitService";
 import { CustomDropdown } from "../components/CustomDropdown";
@@ -17,7 +16,7 @@ export const CreateScreen = () => {
   const [categories, setCategories] = useState<{ label: string; value: string }[]>([]);
   const [frequencies, setFrequencies] = useState<{ label: string; value: string }[]>([]);
   const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date>(new Date());
   const [trigger, setTrigger] = useState("");
   const [intention, setIntention] = useState("");
 
@@ -63,7 +62,7 @@ export const CreateScreen = () => {
       setCategory(null);
       setFrequency(null);
       setStartDate(new Date());
-      setEndDate(null);
+      setEndDate(new Date());
       setTrigger("");
       setIntention("");
     } catch (error: any) {
@@ -73,66 +72,100 @@ export const CreateScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Header></Header>
+    <KeyboardAvoidingView
+      style={styles.mainContainer}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+    >
+      <Header />
+
       <Pressable style={styles.button} onPress={handleCreateHabit}>
         <Text style={styles.buttonText}>Create Habit</Text>
       </Pressable>
       <ScrollView
-        contentContainerStyle={{  }}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.label}>Title *</Text>
-        <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Habit Title" />
+        <View>
 
-        <Text style={styles.label}>Description</Text>
-        <TextInput style={[styles.input, styles.textArea]} value={description} onChangeText={setDescription} placeholder="Habit Description" multiline />
+          <View style={{ width: "100%" }}>
+            <Text style={styles.label}>Title *</Text>
+            <TextInput
+              style={styles.input}
+              value={title}
+              onChangeText={setTitle}
+              placeholder="Habit Title"
+            />
 
-        <CustomDropdown
-          label="Category"
-          options={categories}
-          selectedValue={category}
-          onSelect={setCategory}
-        />
+            <Text style={styles.label}>Description</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              value={description}
+              onChangeText={setDescription}
+              placeholder="Habit Description"
+              multiline
+            />
 
-        <CustomDropdown
-          label="Frequency"
-          options={frequencies}
-          selectedValue={frequency}
-          onSelect={setFrequency}
-        />
+            <CustomDropdown
+              label="Category"
+              options={categories}
+              selectedValue={category}
+              onSelect={setCategory}
+            />
 
-        <DatePickerInput
-          label="Start Date"
-          date={startDate}
-          onDateChange={setStartDate}
-        />
+            <CustomDropdown
+              label="Frequency"
+              options={frequencies}
+              selectedValue={frequency}
+              onSelect={setFrequency}
+            />
 
-        <DatePickerInput
-          label="End Date"
-          date={endDate}
-          onDateChange={setStartDate}
-          optional
-        />
-        <Text style={styles.label}>Trigger</Text>
-        <TextInput style={styles.input} placeholder="Ex: After breakfast" value={trigger} onChangeText={setTrigger} />
+            <DatePickerInput
+              label="Start Date"
+              date={startDate}
+              onDateChange={setStartDate}
+            />
 
-        <Text style={styles.label}>Intention</Text>
-        <TextInput style={styles.input} placeholder="Ex: Stay healthy" value={intention} onChangeText={setIntention} />
+            <DatePickerInput
+              label="End Date"
+              date={endDate}
+              onDateChange={setEndDate}
+              optional
+            />
+
+            <Text style={styles.label}>Trigger</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Ex: After breakfast"
+              value={trigger}
+              onChangeText={setTrigger}
+            />
+
+            <Text style={styles.label}>Intention</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Ex: Stay healthy"
+              value={intention}
+              onChangeText={setIntention}
+            />
+          </View>
+        </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
+    flex: 1, 
+    backgroundColor: theme.colors.background,
     ...theme.padding.horizontal.xxl,
     paddingTop: theme.padding.vertical.xxl.paddingVertical,
-    ...theme.align["top-left"],
-    ...theme.flex.column,
-    gap: theme.gap.lg,
-    backgroundColor: theme.colors.background,
-    ...theme.size.full,
+    gap: theme.gap.s,
+  },
+  scrollContent: {
+    paddingBottom: 20,
+    flexGrow: 1,
   },
   label: {
     fontSize: theme.typography.sizes.sm,
@@ -142,23 +175,24 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    ...theme.size.full_width,
     borderColor: theme.colors.primary,
     borderRadius: theme.borderRadius.md,
     ...theme.padding.vertical.sm,
     ...theme.padding.horizontal.sm,
     fontSize: theme.typography.sizes.sm,
-    marginTop: 12,
-    ...theme.size.full_width,
+    width: "100%",
   },
-  textArea: { minHeight: 80, textAlignVertical: "top" },
+  textArea: {
+    minHeight: 80,
+    textAlignVertical: "top",
+  },
   button: {
     backgroundColor: theme.colors.primary,
-    ...theme.size.full_width,
     borderRadius: theme.borderRadius.md,
     ...theme.padding.vertical.sm,
     ...theme.align["center"],
-
+    ...theme.size.full_width,
+    marginVertical: 12,
   },
   buttonText: {
     color: theme.colors.white,

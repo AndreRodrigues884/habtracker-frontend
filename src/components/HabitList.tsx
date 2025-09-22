@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { theme } from "../styles/theme";
-import { HabitCardProps } from "../types/Habit";
+import { HabitListProps } from "../types/Habit";
 import HealthIcon from '../assets/icons/health.svg';
 import ProductivityIcon from '../assets/icons/productivity.svg';
 import LearningIcon from '../assets/icons/learning.svg';
@@ -9,50 +9,64 @@ import LifestyleIcon from '../assets/icons/lifestyle.svg';
 import SocialIcon from '../assets/icons/social.svg';
 import CreativityIcon from '../assets/icons/creativity.svg';
 import FireIcon from '../assets/icons/fire.svg';
-import CheckIcon from '../assets/icons/check.svg';
-
+import DeleteIcon from '../assets/icons/delete.svg';
+import { deleteUserHabit } from "../services/habitService"; // API call para deletar
+import { AuthContext } from "../contexts/AuthContext";
 
 const CategoryIcons: Record<string, any> = {
-    health: HealthIcon,
-    productivity: ProductivityIcon,
-    learning: LearningIcon,
-    creativity: CreativityIcon,
-    lifestyle: LifestyleIcon,
-    social: SocialIcon,
+  health: HealthIcon,
+  productivity: ProductivityIcon,
+  learning: LearningIcon,
+  creativity: CreativityIcon,
+  lifestyle: LifestyleIcon,
+  social: SocialIcon,
 };
 
-export const HabitCard: React.FC<HabitCardProps> = ({ category, title, currentStreak, isCompleted = false, onComplete, style}) => {
-    const Icon = CategoryIcons[category];
-    return (
-          <View style={[styles.container, style]}>
-            <View style={styles.card}>
-                <View style={styles.left}>
-                    {Icon && <Icon width={20} height={20} />}
-                    <View style={styles.textContainer}>
-                        <Text style={styles.title}>{title}</Text>
-                        <View style={styles.streakContainer}>
-                            <Text style={styles.streak}>{currentStreak}</Text>
-                            <FireIcon width={16} height={16} />
-                        </View>
+export const HabitList: React.FC<HabitListProps> = ({
+  habitId,
+  category,
+  title,
+  currentStreak,
+  onDeleted,
+}) => {
+  const Icon = CategoryIcons[category];
+  const { user } = React.useContext(AuthContext);
 
-                    </View>
-                </View>
-                <View style={styles.ButtonContainer}>
-                    <Pressable
-                        style={styles.completeButton}
-                        onPress={onComplete}
-                        disabled={isCompleted} 
-                    >
-                        <View style={styles.completeButtonContent}>
-                            <Text style={styles.completeButtonText}>Done</Text>
-                            <CheckIcon width={16} height={16} />
-                        </View>
-                    </Pressable>
-                </View>
+  const handleDelete = async () => {
+    if (!user) return;
+
+    try {
+      await deleteUserHabit(user.token, habitId);
+      if (onDeleted) onDeleted(habitId); // atualiza a lista no frontend
+    } catch (err) {
+      console.error("Erro ao deletar hábito:", err);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <View style={styles.left}>
+          {Icon && <Icon width={20} height={20} />}
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{title}</Text>
+            <View style={styles.streakContainer}>
+              <Text style={styles.streak}>{currentStreak}</Text>
+              <FireIcon width={16} height={16} />
             </View>
+          </View>
         </View>
-
-    );
+        <View style={styles.ButtonContainer}>
+          <Pressable style={styles.deleteButton} onPress={handleDelete}>
+            <View style={styles.deleteButtonContent}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
+              <DeleteIcon width={16} height={16} />
+            </View>
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
     textContainer: {
         ...theme.flex.row,
         ...theme.align["center-left"],
-        gap: theme.gap.s,
+        gap: theme.gap.sm,
     },
     title: {
         fontSize: theme.typography.sizes.sm,
@@ -94,14 +108,14 @@ const styles = StyleSheet.create({
         ...theme.align["center"],
         gap: theme.gap.xs,
     },
-    completeButton: {
-        backgroundColor: theme.colors.primary,
+    deleteButton: {
+        backgroundColor: theme.colors.red,
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: theme.borderRadius.md,
 
     },
-    completeButtonText: {
+    deleteButtonText: {
         color: theme.colors.white,
         fontFamily: theme.typography.fontFamily.medium,
     },
@@ -109,7 +123,7 @@ const styles = StyleSheet.create({
         flex: 1,
         ...theme.align["center-right"],
     },
-    completeButtonContent: {
+    deleteButtonContent: {
         ...theme.flex.row,
         ...theme.align["center"],
         gap: theme.gap.xs,

@@ -27,3 +27,9 @@ export const getUserHabits = async (token: string) => {
   });
   return response.data.habits; 
 };
+
+export const deleteUserHabit = async (token: string, habitId: string) => {
+  await api.delete(`/habtracker/habits/${habitId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
