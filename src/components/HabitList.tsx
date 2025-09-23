@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Alert } from "react-native";
 import { theme } from "../styles/theme";
 import { HabitListProps } from "../types/Habit";
 import HealthIcon from '../assets/icons/health.svg';
@@ -35,12 +35,29 @@ export const HabitList: React.FC<HabitListProps> = ({
   const handleDelete = async () => {
     if (!user) return;
 
-    try {
-      await deleteUserHabit(user.token, habitId);
-      if (onDeleted) onDeleted(habitId); // atualiza a lista no frontend
-    } catch (err) {
-      console.error("Erro ao deletar hábito:", err);
-    }
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure you want to delete this habit?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel", // estilo especial para botão de cancelamento
+        },
+        {
+          text: "Yes",
+          onPress: async () => {
+            try {
+              await deleteUserHabit(user.token, habitId);
+              if (onDeleted) onDeleted(habitId); // atualiza a lista no frontend
+            } catch (err) {
+              console.error("Erro ao deletar hábito:", err);
+            }
+          },
+          style: "destructive", // vermelho no iOS, indica ação perigosa
+        },
+      ],
+      { cancelable: true } // permite fechar clicando fora da modal
+    );
   };
 
   return (
@@ -70,62 +87,62 @@ export const HabitList: React.FC<HabitListProps> = ({
 };
 
 const styles = StyleSheet.create({
-    container: {
-        ...theme.size.full_width,
-    },
-    card: {
-        backgroundColor: theme.colors.white,
-        ...theme.flex.row,
-        ...theme.align["space-between"],
-        ...theme.align["center"],
-        ...theme.padding.horizontal.sm,
-        ...theme.padding.vertical.sm,
-        borderRadius: theme.borderRadius.md,
-        ...theme.size.full_width,
-    },
-    left: {
-        ...theme.flex.row,
-        ...theme.align["center-left"],
-        gap: theme.gap.s,
-    },
-    textContainer: {
-        ...theme.flex.row,
-        ...theme.align["center-left"],
-        gap: theme.gap.sm,
-    },
-    title: {
-        fontSize: theme.typography.sizes.sm,
-        fontFamily: theme.typography.fontFamily.medium,
-        color: theme.colors.dark_text,
-    },
-    streak: {
-        fontSize: theme.typography.sizes.sm,
-        color: theme.colors.dark_text,
-        fontFamily: theme.typography.fontFamily.medium,
-    },
-    streakContainer: {
-        ...theme.flex.row,
-        ...theme.align["center"],
-        gap: theme.gap.xs,
-    },
-    deleteButton: {
-        backgroundColor: theme.colors.red,
-        paddingVertical: 6,
-        paddingHorizontal: 12,
-        borderRadius: theme.borderRadius.md,
+  container: {
+    ...theme.size.full_width,
+  },
+  card: {
+    backgroundColor: theme.colors.white,
+    ...theme.flex.row,
+    ...theme.align["space-between"],
+    ...theme.align["center"],
+    ...theme.padding.horizontal.sm,
+    ...theme.padding.vertical.sm,
+    borderRadius: theme.borderRadius.md,
+    ...theme.size.full_width,
+  },
+  left: {
+    ...theme.flex.row,
+    ...theme.align["center-left"],
+    gap: theme.gap.s,
+  },
+  textContainer: {
+    ...theme.flex.row,
+    ...theme.align["center-left"],
+    gap: theme.gap.sm,
+  },
+  title: {
+    fontSize: theme.typography.sizes.sm,
+    fontFamily: theme.typography.fontFamily.medium,
+    color: theme.colors.dark_text,
+  },
+  streak: {
+    fontSize: theme.typography.sizes.sm,
+    color: theme.colors.dark_text,
+    fontFamily: theme.typography.fontFamily.medium,
+  },
+  streakContainer: {
+    ...theme.flex.row,
+    ...theme.align["center"],
+    gap: theme.gap.xs,
+  },
+  deleteButton: {
+    backgroundColor: theme.colors.red,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: theme.borderRadius.md,
 
-    },
-    deleteButtonText: {
-        color: theme.colors.white,
-        fontFamily: theme.typography.fontFamily.medium,
-    },
-    ButtonContainer: {
-        flex: 1,
-        ...theme.align["center-right"],
-    },
-    deleteButtonContent: {
-        ...theme.flex.row,
-        ...theme.align["center"],
-        gap: theme.gap.xs,
-    }
+  },
+  deleteButtonText: {
+    color: theme.colors.white,
+    fontFamily: theme.typography.fontFamily.medium,
+  },
+  ButtonContainer: {
+    flex: 1,
+    ...theme.align["center-right"],
+  },
+  deleteButtonContent: {
+    ...theme.flex.row,
+    ...theme.align["center"],
+    gap: theme.gap.xs,
+  }
 });

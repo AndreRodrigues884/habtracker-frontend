@@ -15,18 +15,20 @@ export const LoginScreen = () => {
   const { login } = useContext(AuthContext);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [inputError, setInputError] = useState("");
 
   const handleLogin = async () => {
-  const error = await login({ identifier, password });
-  if (error) {
-    return Alert.alert("Erro", error);
-  }
+    setInputError("");
 
-  setIdentifier("");
-  setPassword("");
+    const error = await login({ identifier, password });
 
-  navigation.replace("Menu");
-};
+    if (error) {
+      setInputError( error);
+      return;
+    }
+
+    navigation.replace("Menu");
+  };
 
   return (
     <View style={[styles.mainContainer]}>
@@ -44,8 +46,16 @@ export const LoginScreen = () => {
 
           <View style={[styles.inputsContainer]}>
             <View style={[styles.inputs]}>
-              <InputField placeholder="Name or Email" value={identifier} onChangeText={setIdentifier} />
-              <PasswordInput placeholder="Password" value={password} onChangeText={setPassword} />
+              <View>
+                <InputField placeholder="Name or Email" value={identifier} onChangeText={setIdentifier} />
+              </View>
+              <View>
+                <PasswordInput placeholder="Password" value={password} onChangeText={setPassword} />
+                {inputError && (
+                  <Text style={{ color: 'red' }}>{inputError}</Text>
+                )}
+              </View>
+
             </View>
             <View style={[styles.link_passwordContainer]}>
               <Text style={styles.link_password}>Forgot your password?</Text>

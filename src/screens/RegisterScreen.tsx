@@ -17,16 +17,16 @@ export const RegisterScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [inputError, setInputError] = useState("");
 
   const handleRegister = async () => {
-    const error = await register({name, email, password});
+    const error = await register({ name, email, password });
+    setInputError("");
+
     if (error) {
-      return Alert.alert("Erro", error);
+      setInputError(error);
+      return;
     }
-    Alert.alert("Sucesso", "Registado com sucesso!");
-    setName("");
-    setEmail("");
-    setPassword("");
 
     navigation.replace("Login");
   };
@@ -44,7 +44,12 @@ export const RegisterScreen = () => {
             <View style={[styles.inputs]}>
               <InputField placeholder="Name" value={name} onChangeText={setName} />
               <InputField placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
-              <PasswordInput placeholder="Password" value={password} onChangeText={setPassword} />
+              <View>
+                <PasswordInput placeholder="Password" value={password} onChangeText={setPassword} />
+                {inputError && (
+                  <Text style={{ color: 'red', textAlign: 'left' }}>{inputError}</Text>
+                )}
+              </View>
             </View>
             <View style={[styles.link_passwordContainer]}>
               <Text style={styles.link_password}>Forgot your password?</Text>
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
     ...theme.padding.vertical.sm
   },
   logoContainer: {
-     ...theme.size.full_width,
+    ...theme.size.full_width,
     ...theme.size.hug_height,
     ...theme.align["center"],
   }
