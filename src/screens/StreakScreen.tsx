@@ -12,7 +12,7 @@ export const StreakScreen = () => {
 
     <View style={styles.container}>
       <Header></Header>
-      <Text>Streak</Text>
+       <Text style={styles.title}>Habits Streaks</Text>
     </View>
 
 
@@ -29,5 +29,10 @@ const styles = StyleSheet.create({
     ...theme.flex.column,
     gap: theme.gap.lg,
     backgroundColor: theme.colors.background,
+  },
+   title: {
+    color: theme.colors.dark_text,
+    fontSize: theme.typography.sizes.md,
+    fontFamily: theme.typography.fontFamily.semibold,
   },
 });

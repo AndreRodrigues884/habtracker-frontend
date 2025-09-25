@@ -68,6 +68,7 @@ export const theme = {
       xs: { paddingHorizontal: 8 } satisfies ViewStyle,
       sm: { paddingHorizontal: 12 } satisfies ViewStyle,
       md: { paddingHorizontal: 16 } satisfies ViewStyle,
+      l: { paddingHorizontal: 24 } satisfies ViewStyle,
       xxl: { paddingHorizontal: 32 } satisfies ViewStyle,
     },
     vertical: {
@@ -89,8 +90,10 @@ export const theme = {
   borderColor: {
     borderWidth: 1,
     borderSecondWidth: 1.5,
+    borderThirdWidth: 2.5,
     borderColor: '#2D69FF',
     borderSecondColor: 'rgba(45,105,255,0.4)', 
+    borderThirdColor: 'rgba(45,105,255,0.4)', 
   },
 
   // Typography
